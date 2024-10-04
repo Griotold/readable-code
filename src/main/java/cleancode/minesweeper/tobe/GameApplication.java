@@ -1,10 +1,14 @@
 package cleancode.minesweeper.tobe;
 
+import cleancode.minesweeper.tobe.gamelevel.Advanced;
+import cleancode.minesweeper.tobe.gamelevel.GameLevel;
+
 public class GameApplication {
 
-    // 다른 게임도 실행해 볼 수도 있겠다!
     public static void main(String[] args) {
-        Minesweeper minesweeper = new Minesweeper();
+        GameLevel gameLevel = new Advanced();
+
+        Minesweeper minesweeper = new Minesweeper(gameLevel);
         minesweeper.run();
     }
 }
