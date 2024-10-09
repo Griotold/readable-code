@@ -47,4 +47,15 @@ public class StudyCafePass {
         return "";
     }
 
+    public boolean isHourly() {
+        return getPassType().isHourly();
+    }
+
+    public boolean isWeekly() {
+        return getPassType().isWeekly();
+    }
+
+    public boolean isFixed() {
+        return getPassType().isFixed();
+    }
 }
