@@ -23,4 +23,9 @@ public enum StudyCafePassType {
     public boolean isFixed() {
         return this == StudyCafePassType.FIXED;
     }
+
+    public boolean isSameTypeAs(StudyCafePass studyCafePass) {
+        return this == studyCafePass.getPassType();
+    }
+
 }
