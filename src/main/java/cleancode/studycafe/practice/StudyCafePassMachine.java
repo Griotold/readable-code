@@ -48,8 +48,8 @@ public class StudyCafePassMachine {
         List<StudyCafeLockerPass> lockerPasses = studyCafeFileHandler.readLockerPasses();
         StudyCafeLockerPass lockerPass = lockerPasses.stream()
             .filter(option ->
-                option.getPassType() == selectedPass.getPassType()
-                    && option.getDuration() == selectedPass.getDuration()
+                option.isSamePassType(selectedPass)
+                    && option.isSameDuration(selectedPass)
             )
             .findFirst()
             .orElse(null);
