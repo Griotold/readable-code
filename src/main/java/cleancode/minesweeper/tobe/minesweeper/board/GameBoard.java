@@ -6,8 +6,9 @@ import cleancode.minesweeper.tobe.minesweeper.board.position.CellPositions;
 import cleancode.minesweeper.tobe.minesweeper.board.position.RelativePosition;
 import cleancode.minesweeper.tobe.minesweeper.gamelevel.GameLevel;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
-import java.util.Stack;
 
 public class GameBoard {
 
@@ -44,7 +45,6 @@ public class GameBoard {
             changeGameStatusToLose();
             return;
         }
-        // openSurroundedCells(cellPosition);
         openSurroundedCells2(cellPosition);
         checkIfGameIsOver();
     }
@@ -60,7 +60,7 @@ public class GameBoard {
         int colSize = getColSize();
 
         return cellPosition.isRowIndexMoreThanOrEqual(rowSize)
-                || cellPosition.isColIndexMoreThanOrEqual(colSize);
+            || cellPosition.isColIndexMoreThanOrEqual(colSize);
     }
 
     public boolean isInProgress() {
@@ -121,19 +121,19 @@ public class GameBoard {
         int colSize = getColSize();
 
         long count = calculateSurroundedPositions(cellPosition, rowSize, colSize).stream()
-                .filter(this::isLandMineCellAt)
-                .count();
+            .filter(this::isLandMineCellAt)
+            .count();
 
         return (int) count;
     }
 
     private List<CellPosition> calculateSurroundedPositions(CellPosition cellPosition, int rowSize, int colSize) {
         return RelativePosition.SURROUNDED_POSITIONS.stream()
-                .filter(cellPosition::canCalculatePositionBy)
-                .map(cellPosition::calculatePositionBy)
-                .filter(position -> position.isRowIndexLessThan(rowSize))
-                .filter(position -> position.isColIndexLessThan(colSize))
-                .toList();
+            .filter(cellPosition::canCalculatePositionBy)
+            .map(cellPosition::calculatePositionBy)
+            .filter(position -> position.isRowIndexLessThan(rowSize))
+            .filter(position -> position.isColIndexLessThan(colSize))
+            .toList();
     }
 
     private void updateCellAt(CellPosition position, Cell cell) {
@@ -159,7 +159,7 @@ public class GameBoard {
     }
 
     private void openSurroundedCells2(CellPosition cellPosition) {
-        Stack<CellPosition> stack = new Stack<>();
+        Deque<CellPosition> stack = new ArrayDeque<>();
         stack.push(cellPosition);
         while (!stack.isEmpty()) {
             openAndPushCellAt(stack);
@@ -170,8 +170,8 @@ public class GameBoard {
         surroundedPositions.forEach(this::openSurroundedCells);
     }
 
-    private void openAndPushCellAt(Stack<CellPosition> stack) {
-        CellPosition currentCellPosition = stack.pop();
+    private void openAndPushCellAt(Deque<CellPosition> deque) {
+        CellPosition currentCellPosition = deque.pop();
         if (isOpenedCell(currentCellPosition)) {
             return;
         }
@@ -186,9 +186,9 @@ public class GameBoard {
         }
 
         List<CellPosition> surroundedPositions
-                = calculateSurroundedPositions(currentCellPosition, getRowSize(), getColSize());
+            = calculateSurroundedPositions(currentCellPosition, getRowSize(), getColSize());
         for (CellPosition surroundedPosition : surroundedPositions) {
-            stack.push(surroundedPosition);
+            deque.push(surroundedPosition);
         }
     }
 
